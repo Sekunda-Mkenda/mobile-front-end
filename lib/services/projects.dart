@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import 'package:login/constants/api/api.dart';
 import 'package:login/constants/api/api_response.dart';
+import 'package:login/models/projects.dart';
 import 'package:login/models/user.dart';
+
+import '../models/project.dart';
+import '../models/task.dart';
 
 Future<ApiResponse> register(
     String firstName,
@@ -86,12 +90,12 @@ Future<ApiResponse> login(String mobile, String password) async {
   return apiResponse;
 }
 
-Future<ApiResponse> verifyOtp(String otp) async {
+Future<ApiResponse> createTaskItemApi(dynamic payload) async {
   ApiResponse apiResponse = ApiResponse();
   ApiHelper http = ApiHelper();
 
   try {
-    var response = await http.post('auth/verify-otp', {'otp': otp});
+    var response = await http.post('tasks/items', payload);
 
     switch (response.statusCode) {
       case 200:
@@ -116,33 +120,88 @@ Future<ApiResponse> verifyOtp(String otp) async {
   return apiResponse;
 }
 
-Future<ApiResponse> resendOtp() async {
+Future<ApiResponse> getProjects(String resourceUrl) async {
   ApiResponse apiResponse = ApiResponse();
   ApiHelper http = ApiHelper();
 
   try {
     //print(loginUrl);
-    var response = await http.post('auth/resend-otp', {});
-
-    print(response.body);
+    var response = await http.get(resourceUrl);
 
     switch (response.statusCode) {
       case 200:
-        // apiResponse.data = jsonDecode(response.body);
-        apiResponse.data = userFromJson(response.body);
+        apiResponse.data = projectListFromJson(response.body);
         break;
-      case 400:
-        final errors = jsonDecode(response.body)['error'];
-        apiResponse.error = errors[errors.keys.elementAt(0)][0];
+      case 404:
+        apiResponse.error = "Request resource was not found.";
         break;
       case 401:
+      case 403:
         apiResponse.error = jsonDecode(response.body)["error"];
         break;
       default:
         apiResponse.error = "Server Error";
     }
   } catch (e) {
-    apiResponse.error = "No internet connection";
+    apiResponse.error = "Something went wrong, try again later";
+    print(e);
+  }
+
+  return apiResponse;
+}
+
+Future<ApiResponse> getProjectById(String projectId) async {
+  ApiResponse apiResponse = ApiResponse();
+  ApiHelper http = ApiHelper();
+
+  try {
+    var response = await http.get('projects/$projectId');
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = projectFromJson(response.body);
+        break;
+      case 404:
+        apiResponse.error = "Request resource was not found.";
+        break;
+      case 401:
+      case 403:
+        apiResponse.error = jsonDecode(response.body)["error"];
+        break;
+      default:
+        apiResponse.error = "Server Error";
+    }
+  } catch (e) {
+    apiResponse.error = "Something went wrong, try again later";
+    print(e);
+  }
+
+  return apiResponse;
+}
+
+Future<ApiResponse> getTaskById(String taskId) async {
+  ApiResponse apiResponse = ApiResponse();
+  ApiHelper http = ApiHelper();
+
+  try {
+    var response = await http.get('tasks/$taskId');
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = taskFromJson(response.body);
+        break;
+      case 404:
+        apiResponse.error = "Request resource was not found.";
+        break;
+      case 401:
+      case 403:
+        apiResponse.error = jsonDecode(response.body)["error"];
+        break;
+      default:
+        apiResponse.error = "Server Error";
+    }
+  } catch (e) {
+    apiResponse.error = "Something went wrong, try again later";
     print(e);
   }
 

@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:get/get.dart';
 import 'package:login/constants/api/api_response.dart';
 import 'package:login/constants/validators.dart';
 import 'package:login/constants/widgets.dart';
 import 'package:login/models/user.dart';
+import 'package:login/screens/projects/_list.dart';
 import 'package:login/services/auth.dart';
 import 'package:login/utils/colors.dart';
 import 'package:login/widgets/buttons.dart';
@@ -36,12 +38,9 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('access_token', user.token ?? '');
       await prefs.setString('user_mobile', _mobileController.text);
 
-      //Navigating to verify otp screen
-      // Get.off(() => const VerifyOtpScreen());
-      // successToast("OTP is successfully sent to 0${_mobileController.text}");
-      String lastFourChars =
-          _mobileController.text.substring(_mobileController.text.length - 4);
-      successToast("OTP is successfully resent to xxxxxx$lastFourChars");
+      //Navigating to the home screen
+      Get.off(() => const ProjectsScreen());
+      successToast("Logged successfully, Welcome");
     } else {
       setState(() {
         isLoginLoading = !isLoginLoading;
@@ -96,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
-                          label: Text('Email'),
+                          label: Text('Mobile'),
                           hintText: '762878075',
                           border: UnderlineInputBorder(
                             borderSide: BorderSide(color: myPrimaryColor),

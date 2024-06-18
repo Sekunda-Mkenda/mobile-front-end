@@ -19,12 +19,12 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        token: json["refresh"],
+        token: json["token"],
         user: json["user"] == null ? null : UserData.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "refresh": token,
+        "token": token,
         "user": user?.toJson(),
       };
 }
@@ -36,7 +36,7 @@ class UserData {
   String? lastName;
   String? email;
   String? mobile;
-  Bool? isActive;
+  bool? isActive;
   dynamic profile;
   String? role;
   String? gender;

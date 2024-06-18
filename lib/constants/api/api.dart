@@ -13,7 +13,7 @@ class ApiHelper {
 
   Future<http.Response> get(String endpoint) async {
     final String url = '$baseUrl$endpoint';
-    final String accessToken = await getAccessToken();
+    final String? accessToken = await getAccessToken();
 
     try {
       final response = await http.get(
@@ -51,7 +51,7 @@ class ApiHelper {
 
   Future<http.Response> update(String endpoint, dynamic body) async {
     final String url = '$baseUrl$endpoint';
-    final String accessToken = await getAccessToken();
+    final String? accessToken = await getAccessToken();
 
     try {
       final response = await http.put(
