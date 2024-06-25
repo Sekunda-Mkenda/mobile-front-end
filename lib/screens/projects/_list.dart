@@ -93,9 +93,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     value: 'profile',
                     child: Text('My Profile'),
                   ),
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: 'logout',
-                    child: const Text('Logout'),
+                    child: Text('Logout'),
                   ),
                 ],
                 elevation: 8.0,

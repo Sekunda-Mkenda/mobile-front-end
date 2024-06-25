@@ -99,8 +99,8 @@ Future<ApiResponse> createTaskItemApi(dynamic payload) async {
 
     switch (response.statusCode) {
       case 200:
-        // apiResponse.data = jsonDecode(response.body);
-        apiResponse.data = userFromJson(response.body);
+      case 201:
+        apiResponse.data = 'Success';
         break;
       case 400:
         // print(response.body['error']);
@@ -185,6 +185,35 @@ Future<ApiResponse> getTaskById(String taskId) async {
 
   try {
     var response = await http.get('tasks/$taskId');
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = taskFromJson(response.body);
+        break;
+      case 404:
+        apiResponse.error = "Request resource was not found.";
+        break;
+      case 401:
+      case 403:
+        apiResponse.error = jsonDecode(response.body)["error"];
+        break;
+      default:
+        apiResponse.error = "Server Error";
+    }
+  } catch (e) {
+    apiResponse.error = "Something went wrong, try again later";
+    print(e);
+  }
+
+  return apiResponse;
+}
+
+Future<ApiResponse> updateTaskStatus(String taskId, String status) async {
+  ApiResponse apiResponse = ApiResponse();
+  ApiHelper http = ApiHelper();
+
+  try {
+    var response = await http.patch('tasks/$taskId/$status', {});
 
     switch (response.statusCode) {
       case 200:

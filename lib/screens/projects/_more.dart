@@ -163,14 +163,14 @@ class _ProjectDetailsState extends State<ProjectDetailScreen> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              "Progress%: ${task?.progressPercentage ?? '0'}",
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black87,
-                                              ),
-                                            ),
+                                            // Text(
+                                            //   "Progress%: ${task?.progressPercentage ?? '0'}",
+                                            //   style: const TextStyle(
+                                            //     fontSize: 14,
+                                            //     fontWeight: FontWeight.bold,
+                                            //     color: Colors.black87,
+                                            //   ),
+                                            // ),
                                             Text(
                                               "Status: ${task?.status ?? ''}",
                                               style: const TextStyle(
