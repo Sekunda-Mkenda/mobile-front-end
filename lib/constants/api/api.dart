@@ -67,4 +67,23 @@ class ApiHelper {
       throw Exception('Error: $error');
     }
   }
+
+  Future<http.Response> patch(String endpoint, dynamic body) async {
+    final String url = '$baseUrl$endpoint';
+    final String? accessToken = await getAccessToken();
+
+    try {
+      final response = await http.patch(
+        Uri.parse(url),
+        headers: {
+          HttpHeaders.authorizationHeader: 'Token $accessToken',
+          HttpHeaders.contentTypeHeader: 'application/json',
+        },
+        body: json.encode(body),
+      );
+      return response;
+    } catch (error) {
+      throw Exception('Error: $error');
+    }
+  }
 }

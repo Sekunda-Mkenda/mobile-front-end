@@ -46,16 +46,15 @@ class _CreateTaskItemScreenState extends State<CreateTaskItemScreen> {
     }
   }
 
-  createTaskItem() async {
-    if (formKey.currentState!.saveAndValidate()) {
+  Future<void> createTaskItem() async {
+    if (formKey.currentState!.validate()) {
       final Map<String, dynamic> payload = {
         "task": arguments['taskId'],
         "title": _titleController.text,
         "description": _descriptionController.text,
-        "progress_percentage": _startDateController.text,
         "type": _selectedItemType,
-        "quantity": int.parse(_quantityController.text),
-        "amount": double.parse(_amountController.text),
+        "quantity": _quantityController.text,
+        "amount": _amountController.text,
         "unit": _unitController.text,
         "attachemnt": getStringImage(_imageFile)
       };
@@ -71,6 +70,13 @@ class _CreateTaskItemScreenState extends State<CreateTaskItemScreen> {
       });
 
       if (response.error == null) {
+        _titleController.clear();
+        _descriptionController.clear();
+        _quantityController.clear();
+        _amountController.clear();
+        _unitController.clear();
+        _selectedItemType = 'Service';
+        _imageFile = null;
         successToast("Task item created successfully");
         // Handle navigation or any other action after successful creation
       } else {
@@ -151,12 +157,14 @@ class _CreateTaskItemScreenState extends State<CreateTaskItemScreen> {
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: 20),
-                FormBuilderTextField(
-                  name: 'unit',
-                  controller: _unitController,
-                  decoration: const InputDecoration(labelText: 'Unit'),
-                  // validator: FormBuilderValidators.required(context),
-                ),
+                _selectedItemType == 'Product'
+                    ? FormBuilderTextField(
+                        name: 'unit',
+                        controller: _unitController,
+                        decoration: const InputDecoration(labelText: 'Unit'),
+                        // validator: FormBuilderValidators.required(context),
+                      )
+                    : const SizedBox(),
                 const SizedBox(
                   height: 10.0,
                 ),
@@ -224,8 +232,8 @@ class _CreateTaskItemScreenState extends State<CreateTaskItemScreen> {
                 ),
                 const SizedBox(height: 20),
                 isLoading
-                    ? progressIndicator(loadingText: "Logging in")
-                    : myElevatedButton("Create", createTaskItem()),
+                    ? progressIndicator(loadingText: "Creating Item...")
+                    : myElevatedButton("Create", createTaskItem),
               ],
             ),
           ),

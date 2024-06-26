@@ -20,7 +20,8 @@ class TaskDetailScreen extends StatefulWidget {
 
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
   dynamic arguments = Get.arguments;
-  bool isLoading = true;
+  bool _isLoading = true;
+  bool _isCreateLoading = true;
   Task? task;
   bool showQuantity = true;
   String statusValue = 'progress'; // Default status value
@@ -30,11 +31,27 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     if (response.error == null) {
       setState(() {
         task = response.data as Task?;
-        isLoading = false;
+        _isLoading = false;
       });
     } else {
       setState(() {
-        isLoading = false;
+        _isLoading = false;
+      });
+      errorToast(response.error.toString());
+    }
+  }
+
+  Future<void> handleUpdateTaskStatus() async {
+    ApiResponse response =
+        await updateTaskStatus(arguments['taskId'], statusValue);
+    if (response.error == null) {
+      setState(() {
+        task = response.data as Task?;
+        _isCreateLoading = false;
+      });
+    } else {
+      setState(() {
+        _isCreateLoading = false;
       });
       errorToast(response.error.toString());
     }
@@ -58,7 +75,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         backgroundColor: myPrimaryColor,
         title: Text("${task?.title} (${task?.number})"),
       ),
-      body: isLoading
+      body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(16.0),
@@ -81,7 +98,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Column(
                         children: [
@@ -94,15 +111,15 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                           const Text('Update Status'),
                         ],
                       ),
-                      Column(
+                      const Column(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.update),
-                            onPressed: () {
-                              _updateProgress();
-                            },
-                          ),
-                          const Text('Update Progress %'),
+                          // IconButton(
+                          //   icon: const Icon(Icons.update),
+                          //   onPressed: () {
+                          //     _updateProgress();
+                          //   },
+                          // ),
+                          // const Text('Update Progress %'),
                         ],
                       ),
                     ],
@@ -206,96 +223,97 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('Update Task Status'),
-              RadioListTile(
-                title: const Text('Progress'),
-                value: 'progress',
-                groupValue: statusValue,
-                onChanged: (value) {
-                  setState(() {
-                    statusValue = value.toString();
-                  });
-                },
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Update Task Status'),
+                  RadioListTile(
+                    title: const Text('Progress'),
+                    value: 'progress',
+                    groupValue: statusValue,
+                    onChanged: (value) {
+                      setModalState(() {
+                        statusValue = value.toString();
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Pending'),
+                    value: 'pending',
+                    groupValue: statusValue,
+                    onChanged: (value) {
+                      setModalState(() {
+                        statusValue = value.toString();
+                      });
+                    },
+                  ),
+                  RadioListTile(
+                    title: const Text('Closed'),
+                    value: 'closed',
+                    groupValue: statusValue,
+                    onChanged: (value) {
+                      setModalState(() {
+                        statusValue = value.toString();
+                      });
+                    },
+                  ),
+                  myElevatedButton('Update', () {
+                    handleUpdateTaskStatus();
+                    Navigator.pop(context);
+                  }),
+                ],
               ),
-              RadioListTile(
-                title: const Text('Pending'),
-                value: 'pending',
-                groupValue: statusValue,
-                onChanged: (value) {
-                  setState(() {
-                    statusValue = value.toString();
-                  });
-                },
-              ),
-              RadioListTile(
-                title: const Text('Closed'),
-                value: 'closed',
-                groupValue: statusValue,
-                onChanged: (value) {
-                  setState(() {
-                    statusValue = value.toString();
-                  });
-                },
-              ),
-              myElevatedButton('Update', () {}),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     Navigator.pop(context);
-              //   },
-              //   child: const Text('Update'),
-              // ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
   }
 
-  void _updateProgress() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Update Progress Percentage',
-          ),
-          content: const Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Enter Progress %'),
-              ),
-            ],
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Cancel'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Perform action to update progress
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Update'),
-                ),
-              ],
-            )
-          ],
-        );
-      },
-    );
-  }
+  // void _updateProgress() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text(
+  //           'Update Progress Percentage',
+  //         ),
+  //         content: const Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           crossAxisAlignment: CrossAxisAlignment.stretch,
+  //           children: [
+  //             TextField(
+  //               keyboardType: TextInputType.number,
+  //               decoration: InputDecoration(labelText: 'Enter Progress %'),
+  //             ),
+  //           ],
+  //         ),
+  //         actions: [
+  //           Row(
+  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //             children: [
+  //               TextButton(
+  //                 onPressed: () {
+  //                   Navigator.pop(context);
+  //                 },
+  //                 child: const Text('Cancel'),
+  //               ),
+  //               ElevatedButton(
+  //                 onPressed: () {
+  //                   // Perform action to update progress
+  //                   Navigator.pop(context);
+  //                 },
+  //                 child: const Text('Update'),
+  //               ),
+  //             ],
+  //           )
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 }
