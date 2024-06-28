@@ -135,17 +135,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     // const Text("Password"),
 
                     const SizedBox(height: 20),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
+                    // const Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       'Forgot Password?',
+                    //       style: TextStyle(
+                    //         color: Colors.grey,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(
                       height: 50,
                     ),

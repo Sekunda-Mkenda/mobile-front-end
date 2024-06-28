@@ -27,9 +27,6 @@ void logoutHander() async {
 
   prefs.remove('user_id');
   prefs.remove('access_token');
-  prefs.remove('is_otp_verified');
-  prefs.remove('refresh_token');
-  prefs.remove('cart');
 
   //redirect user to login screen
   Get.offAll(() => const LoginScreen());
