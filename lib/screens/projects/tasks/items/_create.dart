@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:login/constants/api/api_response.dart';
-import 'package:login/constants/widgets.dart';
-import 'package:login/services/projects.dart';
-import 'package:login/utils/colors.dart';
+import 'package:cpm/constants/api/api_response.dart';
+import 'package:cpm/constants/widgets.dart';
+import 'package:cpm/services/projects.dart';
+import 'package:cpm/utils/colors.dart';
 
 import '../../../../constants/utils.dart';
 import '../../../../widgets/buttons.dart';

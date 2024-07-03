@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:login/constants/widgets.dart';
-import 'package:login/screens/authentication/sign_in_screen.dart';
+import 'package:cpm/constants/widgets.dart';
+import 'package:cpm/screens/authentication/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String?> getAccessToken() async {

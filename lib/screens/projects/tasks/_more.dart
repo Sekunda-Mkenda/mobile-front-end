@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login/widgets/buttons.dart';
+import 'package:cpm/widgets/buttons.dart';
 
 import '../../../constants/api/api_response.dart';
 import '../../../constants/utils.dart';

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login/constants/api/api_response.dart';
-import 'package:login/constants/utils.dart';
-import 'package:login/constants/widgets.dart';
-import 'package:login/models/project.dart';
-import 'package:login/screens/projects/tasks/_more.dart';
-import 'package:login/services/projects.dart';
-import 'package:login/utils/colors.dart';
+import 'package:cpm/constants/api/api_response.dart';
+import 'package:cpm/constants/utils.dart';
+import 'package:cpm/constants/widgets.dart';
+import 'package:cpm/models/project.dart';
+import 'package:cpm/screens/projects/tasks/_more.dart';
+import 'package:cpm/services/projects.dart';
+import 'package:cpm/utils/colors.dart';
 
 class ProjectDetailScreen extends StatefulWidget {
   const ProjectDetailScreen({super.key});
