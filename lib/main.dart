@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Project Tracker',
+      title: 'cpm',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.

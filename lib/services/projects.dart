@@ -236,3 +236,33 @@ Future<ApiResponse> updateTaskStatus(String taskId, String status) async {
 
   return apiResponse;
 }
+
+Future<ApiResponse> deleteTaskItem(String? taskId) async {
+  ApiResponse apiResponse = ApiResponse();
+  ApiHelper http = ApiHelper();
+
+  try {
+    var response = await http.delete('tasks/items/$taskId');
+
+    switch (response.statusCode) {
+      case 200:
+      case 204:
+        apiResponse.data = "Task item was deleted succefully";
+        break;
+      case 404:
+        apiResponse.error = "Request resource was not found.";
+        break;
+      case 401:
+      case 403:
+        apiResponse.error = jsonDecode(response.body)["error"];
+        break;
+      default:
+        apiResponse.error = "Server Error";
+    }
+  } catch (e) {
+    apiResponse.error = "Something went wrong, try again later";
+    print(e);
+  }
+
+  return apiResponse;
+}

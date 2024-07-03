@@ -111,6 +111,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                   ),
                   const PopupMenuItem<String>(
                     value: 'logout',
+                    onTap: logoutHander,
                     child: Text('Logout'),
                   ),
                 ],
