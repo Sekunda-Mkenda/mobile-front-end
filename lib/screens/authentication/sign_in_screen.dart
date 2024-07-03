@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -26,10 +27,20 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool isLoginLoading = false;
+  String? deviceId;
+
+  void getRegistrationId() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    setState(() {
+      deviceId = token;
+    });
+  }
 
   userLogin() async {
-    ApiResponse response =
-        await login(_mobileController.text, _passwordController.text);
+    //Request device unique id for FCM Notifications
+    String? uniqueDeviceId = await FirebaseMessaging.instance.getToken();
+    ApiResponse response = await login(
+        _mobileController.text, _passwordController.text, uniqueDeviceId);
     if (response.error == null) {
       User user;
       user = response.data as User;

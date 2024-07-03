@@ -49,17 +49,14 @@ Future<ApiResponse> register(
   return apiResponse;
 }
 
-Future<ApiResponse> login(String mobile, String password) async {
+Future<ApiResponse> login(
+    String mobile, String password, String? deviceId) async {
   ApiResponse apiResponse = ApiResponse();
   ApiHelper http = ApiHelper();
 
   try {
-    var response = await http.post(
-        'auth/login',
-        {
-          'mobile': '255$mobile',
-          'password': password,
-        },
+    var response = await http.post('auth/login',
+        {'mobile': '255$mobile', 'password': password, 'device_id': deviceId},
         isAuthenticated: false);
     print(response.body);
 

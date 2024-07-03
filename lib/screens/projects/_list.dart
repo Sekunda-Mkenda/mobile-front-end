@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +27,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   final TextEditingController searchController = TextEditingController();
   int currentPage = 1;
   final int pageSize = 10;
+  String? deviceId;
 
   Future<void> getData({String query = '', int page = 1}) async {
     if (page == 1) {
@@ -63,10 +65,26 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     }
   }
 
+  void requestNotificationPermission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
+
   @override
   void initState() {
     super.initState();
     getData();
+    requestNotificationPermission();
   }
 
   void handleShowProjectById(String? projectId) {

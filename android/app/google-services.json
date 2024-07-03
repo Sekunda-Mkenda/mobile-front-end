@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "690401271468",
+    "project_id": "cpm-system",
+    "storage_bucket": "cpm-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690401271468:android:5fc153d44558b5a0848909",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmxCq92aEZhiGJy2KwBQ8LNmCw_qPHhPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
