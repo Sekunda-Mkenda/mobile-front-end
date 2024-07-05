@@ -55,7 +55,7 @@ class _CreateTaskItemScreenState extends State<CreateTaskItemScreen> {
         "quantity": _quantityController.text,
         "amount": _amountController.text,
         "unit": _unitController.text,
-        "attachment": getStringImage(_imageFile)
+        "attachment": getStringImage(_imageFile) ?? ''
       };
 
       setState(() {
