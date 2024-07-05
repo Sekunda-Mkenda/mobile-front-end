@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:login/constants/api/api.dart';
-import 'package:login/constants/api/api_response.dart';
-import 'package:login/models/user.dart';
+import 'package:cpm/constants/api/api.dart';
+import 'package:cpm/constants/api/api_response.dart';
+import 'package:cpm/models/user.dart';
 
 Future<ApiResponse> register(
     String firstName,
@@ -58,7 +58,6 @@ Future<ApiResponse> login(
     var response = await http.post('auth/login',
         {'mobile': '255$mobile', 'password': password, 'device_id': deviceId},
         isAuthenticated: false);
-    print(response.body);
 
     switch (response.statusCode) {
       case 200:

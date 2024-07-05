@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:login/constants/api/api.dart';
-import 'package:login/constants/api/api_response.dart';
-import 'package:login/models/projects.dart';
-import 'package:login/models/user.dart';
+import 'package:cpm/constants/api/api.dart';
+import 'package:cpm/constants/api/api_response.dart';
+import 'package:cpm/models/projects.dart';
+import 'package:cpm/models/user.dart';
 
 import '../models/project.dart';
 import '../models/task.dart';
@@ -218,6 +218,36 @@ Future<ApiResponse> updateTaskStatus(String taskId, String status) async {
     switch (response.statusCode) {
       case 200:
         apiResponse.data = taskFromJson(response.body);
+        break;
+      case 404:
+        apiResponse.error = "Request resource was not found.";
+        break;
+      case 401:
+      case 403:
+        apiResponse.error = jsonDecode(response.body)["error"];
+        break;
+      default:
+        apiResponse.error = "Server Error";
+    }
+  } catch (e) {
+    apiResponse.error = "Something went wrong, try again later";
+    print(e);
+  }
+
+  return apiResponse;
+}
+
+Future<ApiResponse> deleteTaskItem(String? taskId) async {
+  ApiResponse apiResponse = ApiResponse();
+  ApiHelper http = ApiHelper();
+
+  try {
+    var response = await http.delete('tasks/items/$taskId');
+
+    switch (response.statusCode) {
+      case 200:
+      case 204:
+        apiResponse.data = "Task item was deleted succefully";
         break;
       case 404:
         apiResponse.error = "Request resource was not found.";

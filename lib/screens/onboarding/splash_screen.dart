@@ -1,14 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:login/constants/utils.dart';
-import 'package:login/models/projects.dart';
-import 'package:login/screens/authentication/sign_in_screen.dart';
-import 'package:login/screens/projects/_list.dart';
-import 'package:login/utils/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cpm/constants/utils.dart';
+import 'package:cpm/screens/authentication/sign_in_screen.dart';
+import 'package:cpm/screens/projects/_list.dart';
+import 'package:cpm/utils/colors.dart';
 
 class MySplashScreen extends StatefulWidget {
   const MySplashScreen({super.key});

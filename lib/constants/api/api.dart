@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:login/constants/utils.dart';
+import 'package:cpm/constants/utils.dart';
 import '../urls.dart' as url;
 
 class ApiHelper {
@@ -80,6 +80,24 @@ class ApiHelper {
           HttpHeaders.contentTypeHeader: 'application/json',
         },
         body: json.encode(body),
+      );
+      return response;
+    } catch (error) {
+      throw Exception('Error: $error');
+    }
+  }
+
+  Future<http.Response> delete(String endpoint) async {
+    final String url = '$baseUrl$endpoint';
+    final String? accessToken = await getAccessToken();
+
+    try {
+      final response = await http.delete(
+        Uri.parse(url),
+        headers: {
+          HttpHeaders.authorizationHeader: 'Token $accessToken',
+          HttpHeaders.contentTypeHeader: 'application/json',
+        },
       );
       return response;
     } catch (error) {

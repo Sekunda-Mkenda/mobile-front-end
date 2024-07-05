@@ -1,7 +1,7 @@
+import 'package:cpm/widgets/buttons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:login/widgets/buttons.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

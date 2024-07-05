@@ -1,14 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:login/constants/api/api_response.dart';
-import 'package:login/constants/utils.dart';
-import 'package:login/models/project.dart';
-import 'package:login/models/projects.dart';
-import 'package:login/screens/projects/_more.dart';
-import 'package:login/services/projects.dart';
-import 'package:login/utils/colors.dart';
+import 'package:cpm/constants/api/api_response.dart';
+import 'package:cpm/constants/utils.dart';
+import 'package:cpm/models/projects.dart';
+import 'package:cpm/screens/projects/_more.dart';
+import 'package:cpm/services/projects.dart';
+import 'package:cpm/utils/colors.dart';
 import '../../constants/widgets.dart';
 
 class ProjectsScreen extends StatefulWidget {
@@ -113,6 +111,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                   ),
                   const PopupMenuItem<String>(
                     value: 'logout',
+                    onTap: logoutHander,
                     child: Text('Logout'),
                   ),
                 ],

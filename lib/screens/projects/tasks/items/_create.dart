@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:login/constants/api/api_response.dart';
-import 'package:login/constants/widgets.dart';
-import 'package:login/services/projects.dart';
-import 'package:login/utils/colors.dart';
+import 'package:cpm/constants/api/api_response.dart';
+import 'package:cpm/constants/widgets.dart';
+import 'package:cpm/services/projects.dart';
+import 'package:cpm/utils/colors.dart';
 
 import '../../../../constants/utils.dart';
 import '../../../../widgets/buttons.dart';
+import '../_more.dart';
 
 class CreateTaskItemScreen extends StatefulWidget {
   const CreateTaskItemScreen({Key? key}) : super(key: key);
@@ -23,8 +24,6 @@ class _CreateTaskItemScreenState extends State<CreateTaskItemScreen> {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _startDateController = TextEditingController();
-  final TextEditingController _endDateController = TextEditingController();
   final TextEditingController _typeController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
@@ -56,7 +55,7 @@ class _CreateTaskItemScreenState extends State<CreateTaskItemScreen> {
         "quantity": _quantityController.text,
         "amount": _amountController.text,
         "unit": _unitController.text,
-        "attachemnt": getStringImage(_imageFile)
+        "attachment": getStringImage(_imageFile)
       };
 
       setState(() {
@@ -79,6 +78,10 @@ class _CreateTaskItemScreenState extends State<CreateTaskItemScreen> {
         _imageFile = null;
         successToast("Task item created successfully");
         // Handle navigation or any other action after successful creation
+        Get.off(
+          () => const TaskDetailScreen(),
+          arguments: {'taskId': arguments['taskId']},
+        );
       } else {
         errorToast(response.error.toString());
       }

@@ -3,14 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:login/constants/api/api_response.dart';
-import 'package:login/constants/validators.dart';
-import 'package:login/constants/widgets.dart';
-import 'package:login/models/user.dart';
-import 'package:login/screens/projects/_list.dart';
-import 'package:login/services/auth.dart';
-import 'package:login/utils/colors.dart';
-import 'package:login/widgets/buttons.dart';
+import 'package:cpm/constants/api/api_response.dart';
+import 'package:cpm/constants/validators.dart';
+import 'package:cpm/constants/widgets.dart';
+import 'package:cpm/models/user.dart';
+import 'package:cpm/screens/projects/_list.dart';
+import 'package:cpm/services/auth.dart';
+import 'package:cpm/utils/colors.dart';
+import 'package:cpm/widgets/buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -146,17 +146,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     // const Text("Password"),
 
                     const SizedBox(height: 20),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
+                    // const Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       'Forgot Password?',
+                    //       style: TextStyle(
+                    //         color: Colors.grey,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(
                       height: 50,
                     ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login/utils/colors.dart';
+import 'package:cpm/utils/colors.dart';
 
 AppBar myAppbar(String upperText) {
   return AppBar(

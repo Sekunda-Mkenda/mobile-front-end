@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:login/utils/colors.dart';
-import 'package:login/widgets/appbar.dart';
+import 'package:cpm/utils/colors.dart';
+import 'package:cpm/widgets/appbar.dart';
 
 class TaskListScreen extends StatefulWidget {
   const TaskListScreen({Key? key}) : super(key: key);

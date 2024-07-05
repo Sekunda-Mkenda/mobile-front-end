@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login/utils/colors.dart';
-import 'package:login/widgets/buttons.dart';
+import 'package:cpm/utils/colors.dart';
+import 'package:cpm/widgets/buttons.dart';
 
 BottomNavigationBarItem myBottomNavItem(
     IconData icon, String itemLabel, int index) {

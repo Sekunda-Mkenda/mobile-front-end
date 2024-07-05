@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login/widgets/buttons.dart';
+import 'package:cpm/widgets/buttons.dart';
 
 import '../../../constants/api/api_response.dart';
 import '../../../constants/utils.dart';
@@ -49,6 +49,24 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         task = response.data as Task?;
         _isCreateLoading = false;
       });
+      successToast("Task status updated successfully");
+      getTaskDetails();
+    } else {
+      setState(() {
+        _isCreateLoading = false;
+      });
+      errorToast(response.error.toString());
+    }
+  }
+
+  Future<void> handleDeleteTaskItem(String? taskItemId) async {
+    ApiResponse response = await deleteTaskItem(taskItemId);
+    if (response.error == null) {
+      setState(() {
+        _isCreateLoading = false;
+      });
+      successToast("Task item deleted successfully");
+      getTaskDetails();
     } else {
       setState(() {
         _isCreateLoading = false;
@@ -95,6 +113,30 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                       ),
                       const SizedBox(width: 20),
                     ],
+                  ),
+                  const SizedBox(height: 10),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: "Status: ",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87, // Gray color for "Status: "
+                          ),
+                        ),
+                        TextSpan(
+                          text: task?.status ?? '',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color:
+                                Colors.orange, // Orange color for task status
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -163,19 +205,20 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                     //     'Amount: ${taskItem?.amount} ${taskItem?.unit}'),
                                     PopupMenuButton(
                                       itemBuilder: (context) => [
-                                        const PopupMenuItem(
+                                        PopupMenuItem(
                                           child: Text('Delete'),
-                                          // onTap: () => deleteTaskItem(taskItem!),
+                                          onTap: () => handleDeleteTaskItem(
+                                              taskItem?.id),
                                         ),
                                         PopupMenuItem(
                                           child: const Text('Show More'),
                                           onTap: () =>
                                               showMoreTaskItem(taskItem!),
                                         ),
-                                        const PopupMenuItem(
-                                          child: Text('Update'),
-                                          // onTap: () => updateTaskItem(taskItem!),
-                                        ),
+                                        // const PopupMenuItem(
+                                        //   child: Text('Update'),
+                                        //   // onTap: () => updateTaskItem(taskItem!),
+                                        // ),
                                       ],
                                     ),
                                   ],
@@ -203,7 +246,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('ID: ${taskItem.id}'),
+                  // Text('ID: ${taskItem.id}'),
                   Text('Title: ${taskItem.title}'),
                   Text('Description: ${taskItem.description}'),
                   Text('Type: ${taskItem.type}'),
@@ -264,6 +307,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   myElevatedButton('Update', () {
                     handleUpdateTaskStatus();
                     Navigator.pop(context);
+                    // getTaskDetails();
                   }),
                 ],
               ),
@@ -273,47 +317,4 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
       },
     );
   }
-
-  // void _updateProgress() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: const Text(
-  //           'Update Progress Percentage',
-  //         ),
-  //         content: const Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           crossAxisAlignment: CrossAxisAlignment.stretch,
-  //           children: [
-  //             TextField(
-  //               keyboardType: TextInputType.number,
-  //               decoration: InputDecoration(labelText: 'Enter Progress %'),
-  //             ),
-  //           ],
-  //         ),
-  //         actions: [
-  //           Row(
-  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //             children: [
-  //               TextButton(
-  //                 onPressed: () {
-  //                   Navigator.pop(context);
-  //                 },
-  //                 child: const Text('Cancel'),
-  //               ),
-  //               ElevatedButton(
-  //                 onPressed: () {
-  //                   // Perform action to update progress
-  //                   Navigator.pop(context);
-  //                 },
-  //                 child: const Text('Update'),
-  //               ),
-  //             ],
-  //           )
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login/utils/colors.dart';
-import 'package:login/widgets/appbar.dart';
+import 'package:cpm/utils/colors.dart';
+import 'package:cpm/widgets/appbar.dart';
 
 class ProjectListScreen extends StatefulWidget {
   const ProjectListScreen({Key? key}) : super(key: key);
