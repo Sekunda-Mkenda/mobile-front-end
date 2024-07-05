@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:cpm/constants/api/api.dart';
 import 'package:cpm/constants/api/api_response.dart';
+import 'package:cpm/constants/utils.dart';
 import 'package:cpm/models/user.dart';
+import 'package:cpm/models/user_profile.dart';
 
 Future<ApiResponse> register(
     String firstName,
@@ -76,6 +78,36 @@ Future<ApiResponse> login(
     }
   } catch (e) {
     apiResponse.error = "No internet connection";
+    print(e);
+  }
+
+  return apiResponse;
+}
+
+Future<ApiResponse> getProfile() async {
+  ApiResponse apiResponse = ApiResponse();
+  ApiHelper http = ApiHelper();
+  var userId = await getUserId();
+
+  try {
+    var response = await http.get('user/$userId/profile');
+
+    switch (response.statusCode) {
+      case 200:
+        apiResponse.data = userProfileFromJson(response.body);
+        break;
+      case 404:
+        apiResponse.error = "Request resource was not found.";
+        break;
+      case 401:
+      case 403:
+        apiResponse.error = jsonDecode(response.body)["error"];
+        break;
+      default:
+        apiResponse.error = "Server Error";
+    }
+  } catch (e) {
+    apiResponse.error = "Something went wrong, try again later";
     print(e);
   }
 

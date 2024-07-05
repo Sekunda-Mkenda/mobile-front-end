@@ -48,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('access_token', user.token ?? '');
       await prefs.setString('user_mobile', _mobileController.text);
+      await prefs.setString('user_id', user.user?.id ?? '');
 
       //Navigating to the home screen
       Get.off(() => const ProjectsScreen());

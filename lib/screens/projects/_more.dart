@@ -1,3 +1,4 @@
+import 'package:cpm/screens/profile/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cpm/constants/api/api_response.dart';
@@ -52,6 +53,37 @@ class _ProjectDetailsState extends State<ProjectDetailScreen> {
       appBar: AppBar(
         backgroundColor: myPrimaryColor,
         title: const Text("Project Details"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.account_circle, size: 30.0),
+            onPressed: () {
+              // show dropdown menu
+              showMenu(
+                context: context,
+                position: const RelativeRect.fromLTRB(1000, 80, 0, 0),
+                items: [
+                  PopupMenuItem<String>(
+                    value: 'profile',
+                    child: const Text('My Profile'),
+                    onTap: () => Get.to(() => const UserProfileScreen()),
+                  ),
+                  const PopupMenuItem<String>(
+                    value: 'logout',
+                    onTap: logoutHander,
+                    child: Text('Logout'),
+                  ),
+                ],
+                elevation: 8.0,
+              ).then((value) {
+                if (value == 'profile') {
+                  // Navigate to profile
+                } else if (value == 'logout') {
+                  // Perform logout
+                }
+              });
+            },
+          ),
+        ],
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

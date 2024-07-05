@@ -1,3 +1,4 @@
+import 'package:cpm/screens/profile/user_profile_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,9 +106,10 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 context: context,
                 position: const RelativeRect.fromLTRB(1000, 80, 0, 0),
                 items: [
-                  const PopupMenuItem<String>(
+                  PopupMenuItem<String>(
                     value: 'profile',
-                    child: Text('My Profile'),
+                    child: const Text('My Profile'),
+                    onTap: () => Get.to(() => const UserProfileScreen()),
                   ),
                   const PopupMenuItem<String>(
                     value: 'logout',
